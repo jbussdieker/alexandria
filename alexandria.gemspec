@@ -4,8 +4,8 @@ require File.expand_path('../lib/alexandria/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Joshua Bussdieker"]
   gem.email         = ["josh.bussdieker@moovweb.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Simple ruby based git server.}
+  gem.summary       = %q{Simple ruby based git server. Simple user based repository hosting.}
   gem.homepage      = ""
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }

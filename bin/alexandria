@@ -1,2 +1,8 @@
 #!/usr/bin/ruby
-puts "Good"
+require File.expand_path('../../lib/alexandria', __FILE__)
+if ENV['SSH_CLIENT']
+  # We don't return from here
+  Alexandria.ssh_client(ENV['SSH_CLIENT'])
+else
+  Alexandria.client
+end
