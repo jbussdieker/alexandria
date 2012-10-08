@@ -4,6 +4,7 @@ module Alexandria
   class Command
     def run(config, user)
       File.open(config.log_file, "a") {|f| f.write("[DEBUG]\t#{Time.now}\t#{user.name}\t#{@command}\n") }
+      FileUtils.mkdir_p config.repo_dir
       FileUtils.chdir(config.repo_dir)
       Kernel.exec 'git', 'shell', '-c', @command
     end
