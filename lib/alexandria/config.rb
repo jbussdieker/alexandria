@@ -18,7 +18,7 @@ module Alexandria
       @git_user ||= "git"
       @repo_dir ||= "/home/#{@git_user}/repos"
       @key_file ||= "/home/#{@git_user}/.ssh/authorized_keys"
-      @log_file ||= "/var/log/alexandria.log"
+      @log_file ||= "/home/#{@git_user}/alexandria.log"
       @data ||= Alexandria::Data
     end
 
