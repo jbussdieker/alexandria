@@ -19,7 +19,7 @@ module Alexandria
         puts "Generating authorized keys..."
         key_data = User.generate_keys
         FileUtils.mkdir_p File.dirname(config.key_file)
-        FileUtils.mkdir_p File.join(config.repo_dir)
+        FileUtils.mkdir_p config.repo_dir
         File.open(config.key_file, "w") {|f| f.write(key_data) }
         puts "Authorized keys written to: #{config.key_file}"
       else
