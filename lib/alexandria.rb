@@ -6,18 +6,14 @@ require "alexandria/user"
 require "erb"
 
 module Alexandria
-  def self.ssh_client(client_info)
+  def self.run
     config = Alexandria::Config.new
 
-    user = Alexandria::User.new(ARGV[0])
-    command = Alexandria::Command.new(ENV['SSH_ORIGINAL_COMMAND'])
-    command.run(config, user)
-  end
-
-  def self.client
-    config = Alexandria::Config.new
-
-    if ARGV[0] == "write_keys"
+    if ARGV[0] == "ssh"
+      user = Alexandria::User.new(ARGV[1])
+      command = Alexandria::Command.new(ENV['SSH_ORIGINAL_COMMAND'])
+      command.run(config, user)
+    elsif ARGV[0] == "write_keys"
       puts "Generating authorized keys..."
       key_data = User.generate_keys
       File.open(config.key_file, "w") {|f| f.write(key_data) }
