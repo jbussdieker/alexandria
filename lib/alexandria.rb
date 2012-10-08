@@ -28,6 +28,10 @@ module Alexandria
       end
     elsif ARGV[0] == "gen_config"
       puts config.to_yaml
+    elsif ARGV[0] == "create_repo"
+      FileUtils.mkdir_p File.join(config.repo_dir, ARGV[1])
+      FileUtils.chdir File.join(config.repo_dir, ARGV[1])
+      Kernel.exec 'git', 'init', '--bare'
     else
       puts "Invalid command #{ARGV[0]}" if ARGV[0]
       puts "Usage:"
