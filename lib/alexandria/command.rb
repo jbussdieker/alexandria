@@ -1,4 +1,3 @@
-require 'alexandria/logger'
 require 'fileutils'
 
 module Alexandria
