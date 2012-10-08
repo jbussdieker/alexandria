@@ -4,6 +4,7 @@ require "alexandria/command"
 require "alexandria/user"
 
 require "erb"
+require "fileutils"
 
 module Alexandria
   def self.run
@@ -16,6 +17,7 @@ module Alexandria
     elsif ARGV[0] == "write_keys"
       puts "Generating authorized keys..."
       key_data = User.generate_keys
+      FileUtils.mkdir_p File.dirname(config.key_file)
       File.open(config.key_file, "w") {|f| f.write(key_data) }
       puts "Authorized keys written to: #{config.key_file}"
     elsif ARGV[0] == "list_users"
