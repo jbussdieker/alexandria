@@ -4,10 +4,6 @@ module Alexandria
       ["jbussdieker", "jaja"]
     end
 
-    def self.repositories
-      ["testrepo"]
-    end
-
     def self.user_keys(name)
       if name == "jbussdieker"
         [

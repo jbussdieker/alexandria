@@ -2,7 +2,6 @@ require "alexandria/version"
 require "alexandria/config"
 require "alexandria/command"
 require "alexandria/user"
-require "alexandria/repository"
 
 require "erb"
 
@@ -21,12 +20,6 @@ module Alexandria
       config = Alexandria::Config.new
       File.open(config.key_file, "w") {|f| f.write(key_data) }
       puts "Authorized keys written to: #{config.key_file}"
-    elsif ARGV[0] == "list_repositories"
-      puts "Getting repository list..."
-      repos = Repository.all
-      repos.each do |repo|
-        puts " * #{repo.name}"
-      end
     elsif ARGV[0] == "list_users"
       puts "Getting user list..."
       users = User.all
@@ -37,7 +30,7 @@ module Alexandria
       puts "Invalid command #{ARGV[0]}" if ARGV[0]
       puts "Usage:"
       puts
-      puts "  commands: list_users, list_repositories, write_keys"
+      puts "  commands: list_users, write_keys"
       puts
     end
   end
