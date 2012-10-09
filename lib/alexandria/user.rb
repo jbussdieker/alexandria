@@ -4,24 +4,25 @@ module Alexandria
   class User
     attr_accessor :name
 
-    def self.all
-      Alexandria::Data.user_list.collect {|user|
-        User.new(user)
+    def self.all(config)
+      Alexandria::Data.new(config).users.collect {|user|
+        User.new(user, config)
       }
     end
 
-    def self.generate_keys
+    def self.generate_keys(config)
       result = ""
-      users = User.all
+      users = User.all(config)
       users.each do |user|
         result << user.generate_keys
       end
       result
     end
 
-    def initialize(name="")
+    def initialize(name, config)
       @name = name
-      @ssh_keys = Alexandria::Data.user_keys(name).collect {|k|
+      @config = config
+      @ssh_keys = Alexandria::Data.new(@config).keys(name).collect {|k|
         k
       }
     end

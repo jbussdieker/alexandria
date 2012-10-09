@@ -2,36 +2,43 @@ require 'yaml'
 
 module Alexandria
   class Config
-    attr_accessor :key_file, :git_user, :repo_dir, :log_file
+    DEFAULT_CONFIG_FILE = "/etc/alexandria/config.yml"
+    DEFAULT_CONFIG = {
+      :driver => :yaml,
+      :file => "/etc/alexandria/users.yml",
+      :log_file => "/var/log/alexandria.log",
+      :user => "git",
+    }
 
-    def initialize
-      if File.exists? "/etc/alexandria.conf"
-        data = File.open("/etc/alexandria.conf").read
-        raw = YAML.load(data)
-        if raw
-          raw.each_pair do |k,v|
-            send("#{k}=", v)
-          end
-        end
-      end
-
-      @git_user ||= "git"
-      @repo_dir ||= "/home/#{@git_user}/repos"
-      @key_file ||= "/home/#{@git_user}/.ssh/authorized_keys"
-      @log_file ||= "/home/#{@git_user}/alexandria.log"
-      @data ||= Alexandria::Data
+    def key_file
+      "/home/#{data[:user]}/.ssh/authorized_keys"
     end
 
-    def attributes
-      [:key_file, :git_user, :repo_dir, :log_file]
+    def repo_dir
+      "/home/#{data[:user]}/repos"
     end
 
-    def to_yaml
-      raw = {}
-      attributes.each do |attr|
-        raw[attr] = send(attr)
+    def initialize(file=nil)
+      @conf_file = file || DEFAULT_CONFIG_FILE
+    end
+
+    def [](key)
+      data[key]
+    end
+
+    private
+    
+    def data
+      return @raw if @raw
+
+      if File.exists? @conf_file
+        # Found config file
+        data = File.open(@conf_file).read
+        @raw = YAML.load(data)
+      else
+        # Default config
+        @raw = DEFAULT_CONFIG
       end
-      YAML.dump(raw).to_s
     end
   end
 end

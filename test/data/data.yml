@@ -1,0 +1,11 @@
+---
+:users:
+  - john_doe
+  - jane_doe
+:keys:
+  "john_doe":
+    - a
+    - b
+  "jane_doe":
+    - c
+    - d
